@@ -1,2 +1,3 @@
 policy:
+  # ユーザーの依頼内容に応じて、このスキルを自動選択して呼び出すことを許可しない。
   allow_implicit_invocation: false

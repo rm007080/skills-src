@@ -1,22 +1,22 @@
 ---
 name: show-me
-description: Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts.
+description: 簡潔な図、コード構造の略図（code-shape sketches）、要点を絞ったHTML成果物を用いて、現在の話題をユーザーが視覚的に理解できるようにする。
 disable-model-invocation: true
 ---
 
-Help the user understand the current topic of conversation visually. Skip the preamble and keep prose brief. Pick the smallest view that makes the key point clear.
+現在の会話の話題を、ユーザーが視覚的に理解できるようにする。前置きは省き、文章は簡潔にする。要点が明確に伝わる最小限の表現を選ぶ。
 
-- Show logic or an algorithm as pseudocode:
+- ロジック（logic）やアルゴリズム（algorithm）を疑似コード（pseudocode）で示す：
 
 ```text
 on(save)
-  if content is unchanged
-    return cached result
-  write new content
-  return fresh result
+  if 内容に変更がない
+    return キャッシュ済みの結果（cached result）
+  新しい内容を書き込む
+  return 新たな結果
 ```
 
-- Show runtime control flow as a call tree:
+- 実行時（runtime）の制御フロー（control flow）を呼び出しツリー（call tree）で示す：
 
 ```text
 submitForm
@@ -26,7 +26,7 @@ submitForm
   navigateToSession
 ```
 
-- Show UI structure as a component tree, including state and module boundaries that matter:
+- UIの構造をコンポーネントツリー（component tree）で示し、重要な状態（state）とモジュールの境界（module boundaries）を含める：
 
 ```tsx
 <SessionPage> (apps/example/src/routes/session.tsx)
@@ -35,30 +35,30 @@ submitForm
     <RunSkillButton> (packages/ui)
 ```
 
-- Show file responsibility or a broad refactor as a shallow file tree:
+- ファイルの役割や広範囲のリファクタリング（refactor）を、階層の浅いファイルツリー（file tree）で示す：
 
 ```text
 src/
-├── commands/       # parses user actions
-├── sessions/       # owns session state
-└── transport/      # sends API requests
+├── commands/       # ユーザーの操作を解析する
+├── sessions/       # セッション（session）の状態を所有する
+└── transport/      # APIリクエスト（API requests）を送信する
 ```
 
-- Show component interaction, control flow, or data flow with Mermaid:
+- コンポーネント間のやり取り（component interaction）、制御フロー、またはデータフロー（data flow）をMermaidで示す：
 
 ```mermaid
 sequenceDiagram
     participant User
     participant UI
     participant Daemon
-    User->>UI: choose command
-    UI->>Daemon: send expanded prompt
-    Daemon-->>UI: stream result
+    User->>UI: コマンド（command）を選択する
+    UI->>Daemon: 展開済みのプロンプト（prompt）を送信する
+    Daemon-->>UI: 結果をストリーミング（stream）する
 ```
 
-- Use `diff` when the point is what changes and the surrounding shape already exists. Match the diff shape to the topic.
+- 変更内容が要点で、周囲の構造がすでに存在する場合は、差分（`diff`）を使う。差分の表現形式を話題に合わせる。
 
-For a component change:
+コンポーネントの変更の場合：
 
 ```diff
  <SessionPage>
@@ -69,12 +69,12 @@ For a component change:
 +    <SkillResultCard />
 ```
 
-For a file-layout change:
+ファイル配置（file layout）の変更の場合：
 
 ```diff
  src/
  ├── commands/
-+│   └── show-me.ts       # expands the slash command
++│   └── show-me.ts       # スラッシュコマンド（slash command）を展開する
  ├── sessions/
 -└── transport.ts
 +└── transport/
@@ -82,7 +82,7 @@ For a file-layout change:
 +    └── stream.ts
 ```
 
-For a call-tree or call-stack change:
+呼び出しツリーまたは呼び出しスタック（call stack）の変更の場合：
 
 ```diff
  submitForm
@@ -95,18 +95,18 @@ For a call-tree or call-stack change:
 +    subscribeToEvents
 ```
 
-For a state or control-flow change:
+状態または制御フローの変更の場合：
 
 ```diff
  on(save)
--  write content
-+  if content is unchanged
-+    return cached result
-+  write new content
-+  invalidate cache
+-  内容を書き込む
++  if 内容に変更がない
++    return キャッシュ済みの結果
++  新しい内容を書き込む
++  キャッシュを無効化する
 ```
 
-- Show the whole block when most of it is new, when omitted context would hide ownership or order, or when the user needs a copyable target shape:
+- 大部分が新しい場合、省略した文脈によって責任の所在（ownership）や順序が分からなくなる場合、またはユーザーがコピーできる目標の形を必要としている場合は、ブロック全体を示す：
 
 ```ts
 function expandSkill(command: string): string {
@@ -115,14 +115,14 @@ function expandSkill(command: string): string {
 }
 ```
 
-- For a visual UI, layout, state comparison, or concept too dense for Mermaid, write one focused HTML file — a diagram, an infographic, or a short slide deck, whichever fits the point. Match the product's colors, type, spacing, and components; use real labels and data; support desktop and mobile. Then open it for the user:
+- 視覚的なUI、レイアウト（layout）、状態の比較、またはMermaidで表すには情報が込み入った概念には、要点を絞ったHTMLファイルを1つ作成する。図、インフォグラフィック（infographic）、短いスライド資料（slide deck）のうち、要点に合う形式を選ぶ。製品の配色、書体、余白、コンポーネントに合わせ、実際のラベルとデータを使い、デスクトップとモバイルに対応する。その後、ユーザーのためにファイルを開く：
 
 ```
 Bash(open path/to/show-me-{description}.html)
 ```
 
-### guidance
+### 指針
 
-Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
+各図や視覚表現は、それが補足する短い文章の隣に配置する。ユーザーの現在の質問に答えるため、または現在の議論の論点を解決する選択肢を示すために必要な呼び出し、ファイル、プロップス（props）、状態、境界だけを残す。
 
-You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
+これらの表現方法は1つ使っても、複数使ってもよい。すべてを使う可能性は低い。状況に応じて判断し、ユーザーが情報量に圧倒されないようにする。
